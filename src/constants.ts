@@ -34,4 +34,23 @@ const fileSelect = [
   },
 ];
 
-export { breadcrumbNameMap, fileSelect };
+const regions = [
+  "Ashanti Region",
+  "Eastern Region",
+  "Volta Region",
+  "Greater Accra Region",
+  "Central Region",
+  "Bono Region",
+  "Upper East Region",
+  "Upper West Region",
+  "Western North Region",
+  "Savanah Region",
+  "Northern Region",
+  "Bono East Region",
+  "Oti Region",
+  "Ahafo Region",
+  "Western Region",
+  "North East Region",
+];
+
+export { breadcrumbNameMap, fileSelect, regions };

@@ -3,6 +3,7 @@ import ChartCard from "../../../components/chartCard";
 import ControlBar from "../../../components/controlBar";
 import AppDialog from "../../../components/appDialog";
 import { useCallback, useState } from "react";
+import { regions } from "../../../constants";
 
 const DistrictPerformance = () => {
   const [openDialog, setOpenDialog] = useState<boolean>(false);
@@ -20,7 +21,9 @@ const DistrictPerformance = () => {
         secButtonClick={() => setOpenSecDialog(true)}
         secondaryButtonLabel="Add District"
         selectorLabel="Select District"
+        selectorData={regions}
         secondarySelectorLabel="Year"
+        tertiarySelectorLabel="Select age range"
       />
       <Stack direction={"row"} alignItems={"center"} mb={3} spacing={3}>
         <Typography fontWeight={"bold"} variant="h5">

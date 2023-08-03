@@ -84,6 +84,7 @@ const InnovationDocs = () => {
         buttonLabel="Add Document"
         buttonClick={() => setOpenDialog(true)}
         selectorLabel="Date"
+        selectorData={"date"}
       />
       <EnhancedTable data={data} />
 

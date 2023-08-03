@@ -7,7 +7,9 @@ interface ControlBarProps {
   secondaryButtonLabel?: string;
   secButtonClick?: () => void;
   selectorLabel?: string;
+  selectorData: string[] | string;
   secondarySelectorLabel?: string;
+  tertiarySelectorLabel?: string;
 }
 
 const ControlBar = (props: ControlBarProps) => {
@@ -15,7 +17,9 @@ const ControlBar = (props: ControlBarProps) => {
     buttonLabel,
     secondaryButtonLabel,
     selectorLabel,
+    selectorData,
     secondarySelectorLabel,
+    tertiarySelectorLabel,
     secButtonClick,
     buttonClick,
   } = props;
@@ -50,10 +54,14 @@ const ControlBar = (props: ControlBarProps) => {
         </>
       )}
 
-      {selectorLabel && secondarySelectorLabel ? (
+      {selectorLabel && secondarySelectorLabel && tertiarySelectorLabel ? (
         <Box display={"flex"} gap={2}>
           <CustomSelect
-            items={[selectorLabel, "Brong Ahafo"]}
+            items={
+              typeof selectorData === "string"
+                ? selectorData
+                : [selectorLabel, ...selectorData]
+            }
             defaultValue={selectorLabel}
             onSelect={handleSelect}
           />
@@ -62,12 +70,21 @@ const ControlBar = (props: ControlBarProps) => {
             defaultValue={secondarySelectorLabel}
             onSelect={handleSelect}
           />
+          <CustomSelect
+            items={[tertiarySelectorLabel, "1-6", "12-18"]}
+            defaultValue={tertiarySelectorLabel}
+            onSelect={handleSelect}
+          />
         </Box>
       ) : (
         <>
           {selectorLabel ? (
             <CustomSelect
-              items={[selectorLabel, "2022"]}
+              items={
+                typeof selectorData === "string"
+                  ? selectorData
+                  : [selectorLabel, ...selectorData]
+              }
               defaultValue={selectorLabel}
               onSelect={handleSelect}
             />

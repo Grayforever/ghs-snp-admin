@@ -3,6 +3,7 @@ import ChartCard from "../../../components/chartCard";
 import ControlBar from "../../../components/controlBar";
 import AppDialog from "../../../components/appDialog";
 import { useCallback, useState } from "react";
+import { regions } from "../../../constants";
 
 const RegionalIndicator = () => {
   const [openDialog, setOpenDialog] = useState<boolean>(false);
@@ -35,6 +36,7 @@ const RegionalIndicator = () => {
         buttonLabel="Add Indicator"
         buttonClick={() => setOpenDialog(true)}
         selectorLabel="Select Region"
+        selectorData={regions}
         secondarySelectorLabel="Year"
       />
       <Box display={"flex"} flexDirection={"column"} gap={3} overflow={"auto"}>

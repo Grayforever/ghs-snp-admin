@@ -78,6 +78,7 @@ const Blog = () => {
         buttonLabel="Add Blog"
         buttonClick={() => setOpenDialog(true)}
         selectorLabel="Date"
+        selectorData={"date"}
       />
       <EnhancedTable data={data} />
 

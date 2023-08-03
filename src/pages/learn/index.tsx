@@ -82,6 +82,7 @@ const Learn = () => {
         buttonLabel="Add Material"
         buttonClick={() => setOpenDialog(true)}
         selectorLabel="Date"
+        selectorData={"date"}
       />
       <EnhancedTable data={data} />
 

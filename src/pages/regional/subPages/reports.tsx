@@ -84,6 +84,7 @@ const Reports = () => {
         buttonLabel="Add Report"
         buttonClick={() => setOpenDialog(true)}
         selectorLabel="Date"
+        selectorData={"date"}
       />
       <EnhancedTable data={data} />
 

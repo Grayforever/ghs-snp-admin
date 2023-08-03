@@ -45,7 +45,7 @@ const SelectItem = styled(motion.div)(({ theme }) => ({
 }));
 
 interface CustomSelectProps {
-  items: string[];
+  items: string[] | string;
   onSelect: (item: string) => void;
   defaultValue: string;
 }
@@ -54,10 +54,6 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
   items,
   onSelect,
   defaultValue,
-}: {
-  items: string[];
-  onSelect: (item: string) => void;
-  defaultValue: string;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(defaultValue);
@@ -94,11 +90,16 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
       <SelectInput
         value={selectedItem}
         onClick={handleToggle}
+        type={typeof items === "string" ? items : undefined}
+        aria-label="deee"
         readOnly
+        sx={{ width: "20ch" }}
         endAdornment={
-          <IconButton>
-            <KeyboardArrowDownRoundedIcon />
-          </IconButton>
+          typeof items === "string" ? null : (
+            <IconButton>
+              <KeyboardArrowDownRoundedIcon />
+            </IconButton>
+          )
         }
       />
 
@@ -110,13 +111,15 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
             exit={{ opacity: 0, scaleY: 0.8 }}
           >
             <Grid container>
-              {items.map((item) => (
-                <Grid key={item} md={12}>
-                  <SelectItem onClick={() => handleItemClick(item)}>
-                    {item}
-                  </SelectItem>
-                </Grid>
-              ))}
+              {Array.isArray(items)
+                ? items.map((item) => (
+                    <Grid item key={item} md={12}>
+                      <SelectItem onClick={() => handleItemClick(item)}>
+                        {item}
+                      </SelectItem>
+                    </Grid>
+                  ))
+                : null}
             </Grid>
           </DropdownContainer>
         )}
