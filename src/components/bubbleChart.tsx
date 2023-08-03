@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import * as d3 from "d3";
-import { Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 
 interface BubbleData {
@@ -64,12 +64,23 @@ const BubbleChart: React.FC = () => {
   const chartRef = useRef<SVGSVGElement | null>(null);
   const classes = useStyles();
 
+  const handleClick = function (this: SVGGElement) {
+    const clickedBubble = d3.select(this);
+    const isClicked = clickedBubble.attr("data-clicked") === "true";
+
+    clickedBubble.attr("data-clicked", !isClicked);
+    clickedBubble
+      .select("circle")
+      .attr("stroke", isClicked ? "none" : "#707070")
+      .attr("strokeWidth", isClicked ? 0 : 10);
+  };
+
   useEffect(() => {
     const width = 500;
     const height = 500;
 
     const pack = d3.pack<BubbleData>().size([width, height]).padding(40);
-
+    //@ts-ignore
     const root = pack(d3.hierarchy({ children: data }).sum((d) => d.r * 2));
 
     const simulation = d3
@@ -80,7 +91,7 @@ const BubbleChart: React.FC = () => {
       .force(
         "collision",
         d3
-          .forceCollide()
+          .forceCollide<d3.HierarchyCircularNode<BubbleData>>()
           .radius((d) => d.r + 2)
           .strength(0.2)
       );
@@ -91,7 +102,7 @@ const BubbleChart: React.FC = () => {
       .attr("text-anchor", "middle");
 
     const leaf = svg
-      .selectAll<SVGGElement, BubbleData>("g")
+      .selectAll<SVGGElement, d3.HierarchyCircularNode<BubbleData>>("g")
       .data(root.leaves())
       .join("g")
       .attr("transform", (d) => `translate(${d.x - 1},${d.y - 1})`)
@@ -114,7 +125,7 @@ const BubbleChart: React.FC = () => {
       .data((d) => d.data.title.split(/(?=[A-Z][a-z])|\s+/g))
       .join("tspan")
       .attr("x", 0)
-      .attr("y", "0.3em") // Center vertically
+      .attr("y", "0.3em")
       .text((d) => d);
 
     const subtitleMargin = 0.5;
@@ -133,17 +144,6 @@ const BubbleChart: React.FC = () => {
       .text((d) => d)
       .attr("font-size", "0.6em");
 
-    function handleClick() {
-      const clickedBubble = d3.select(this);
-      const isClicked = clickedBubble.attr("data-clicked") === "true";
-
-      clickedBubble.attr("data-clicked", !isClicked);
-      clickedBubble
-        .select("circle")
-        .attr("stroke", isClicked ? "none" : "#707070")
-        .attr("strokeWidth", isClicked ? 0 : 10);
-    }
-
     simulation.on("tick", () => {
       leaf.attr("transform", (d) => `translate(${d.x + 1},${d.y + 1})`);
     });
@@ -157,11 +157,11 @@ const BubbleChart: React.FC = () => {
     <Stack>
       <svg ref={chartRef}></svg>
       <Stack direction={"row"} spacing={2} alignItems={"center"}>
-        {data.map((item, index) => (
-          <div key={index} className={classes.colorLegendItem}>
-            <div
+        {data.map((item) => (
+          <div key={item.subTitle} className={classes.colorLegendItem}>
+            <Box
               className={classes.colorLegendBullet}
-              style={{ backgroundColor: item.bgColor }}
+              sx={{ backgroundColor: item.bgColor }}
             />
             <Typography variant="caption" fontWeight={"bold"}>
               {item.position}

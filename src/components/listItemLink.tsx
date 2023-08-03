@@ -6,8 +6,9 @@ import {
   ListItemIcon,
   ListItemText,
   ListItemProps,
+  ListItemButton,
 } from "@mui/material";
-import React, { JSX } from "react";
+import { JSX } from "react";
 
 interface ListItemLinkProps extends ListItemProps {
   to: string;
@@ -27,13 +28,10 @@ const ListItemLink = (props: ListItemLinkProps) => {
     icon = open ? <ExpandMore /> : <KeyboardArrowRightOutlined />;
   }
   return (
-    <li>
-      <ListItem
-        button
+    <ListItem color="primary" {...other}>
+      <ListItemButton
         component={NavLink}
         to={to}
-        color="primary"
-        end
         sx={{
           color: "primary.main",
           borderRadius: 2,
@@ -44,7 +42,6 @@ const ListItemLink = (props: ListItemLinkProps) => {
             bgcolor: "primary.light",
           },
         }}
-        {...other}
       >
         <ListItemIcon
           sx={{
@@ -56,8 +53,8 @@ const ListItemLink = (props: ListItemLinkProps) => {
         </ListItemIcon>
         <ListItemText primary={primary} disableTypography />
         {icon}
-      </ListItem>
-    </li>
+      </ListItemButton>
+    </ListItem>
   );
 };
 

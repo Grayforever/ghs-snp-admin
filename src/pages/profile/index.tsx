@@ -1,7 +1,17 @@
 import { Stack, Box, Paper, Avatar, Typography, Grid } from "@mui/material";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 
-const profile = {
+interface ProfileType {
+  name: string;
+  jobTitle: string;
+  email: string;
+  station: string;
+  role: string;
+  region: string;
+  department: string;
+}
+
+const profile: ProfileType = {
   name: "Example Name",
   jobTitle: "Principal Nurse",
   email: "examplename@x.com",
@@ -59,7 +69,7 @@ const Profile = () => {
                 >
                   {label}
                 </Typography>
-                <Typography>{profile[label]}</Typography>
+                <Typography>{profile[label as keyof ProfileType]}</Typography>
               </Grid>
             );
           })}
